@@ -13,7 +13,7 @@ StackNode* stack_node_create(void* data) {
 }
 
 void* stack_node_destroy(StackNode** stack_node_ptr) {
-    if(*stack_node_ptr == NULL) return;
+    if(*stack_node_ptr == NULL) return NULL;
 
     void* data = (*stack_node_ptr)->data;
 
