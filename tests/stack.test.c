@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "../include/stack.h"
-#include "../include/person.h"
+#include "include/stack.h"
+#include "include/person.h"
 
 void print_person_stack(Stack* s) {
     if(s == NULL || stack_is_empty(s)) return;

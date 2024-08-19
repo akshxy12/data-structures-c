@@ -60,6 +60,11 @@ bool priority_queue_enqueue(PriorityQueue* priority_queue, void* data, int prior
             prev->next = new_priority_queue_node;
         }
 
+        // If node is inserted at the end, update the rear pointer
+        if(cur == NULL) {
+            priority_queue->rear = new_priority_queue_node;
+        }
+
         cur = NULL;
         prev = NULL;
     }

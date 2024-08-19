@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "../include/queue.h"
-#include "../include/person.h"
+#include "include/queue.h"
+#include "include/person.h"
 
 void print_person_queue(Queue* q) {
     if(q == NULL || queue_is_empty(q)) return;

@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.22)
 
+if(WIN32)
+    set(CMAKE_C_COMPILER /gcc)
+    set(CMAKE_CXX_COMPILER /g++)
+endif(WIN32)
+if(UNIX)
+    set(CMAKE_C_COMPILER /usr/bin/gcc)
+    set(CMAKE_CXX_COMPILER /usr/bin/g++)
+endif(UNIX)
+
 message(CMAKE_CURRENT_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR})
 
 set(PROJECT_NAME DataStructures)
