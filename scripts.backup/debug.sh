@@ -1,2 +1,2 @@
 ./build.sh
-valgrind --leak-check=full --track-origins=yes -s ./DataStructures
+valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s ./DataStructures
