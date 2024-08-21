@@ -23,9 +23,9 @@ void print_person_queue(Queue* q) {
 }
 
 int main() {
-    Person* p1 = person_create("Akshay", 22, 'M', 1.7);
-    Person* p2 = person_create("Anushka", 20, 'F', 1.65);
-    Person* p3 = person_create("Arjun", 22, 'M', 1.7);
+    Person* p1 = person_create("John", 22, 'M', 1.7);
+    Person* p2 = person_create("Doe", 20, 'F', 1.65);
+    Person* p3 = person_create("Marie", 22, 'M', 1.7);
     Queue* q = queue_create();
 
     queue_enqueue(q, p1);
