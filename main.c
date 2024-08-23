@@ -12,16 +12,9 @@ int main() {
     Person* p2 = person_create("Doe", 20, 'F', 1.65);
     Person* p3 = person_create("Marie", 22, 'M', 1.7);
     linked_list_add_beginning(ll, p1);
-<<<<<<< HEAD
-    linked_list_add_end(ll, p2);
-    linked_list_add_middle(ll, p3, 2);
-
-    //  ! Code to test sort -- NOT WORKING
-=======
     linked_list_add_end(ll, p3);
     linked_list_add_middle(ll, p2, 2);
 
->>>>>>> origin/main
     linked_list_sort_ascending(ll);
 
     print_person_linked_list(ll);
@@ -41,10 +34,6 @@ int main() {
     printf("\n");
     person_destroy(&removed_person_middle);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
     char person_to_find[] = "doe";
     Person* person_found = linked_list_search(ll, (void*)person_to_find);
     if(person_found == NULL) {
@@ -59,10 +48,6 @@ int main() {
 
     linked_list_destroy(&ll);
     
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
     return 0;
 }
 
@@ -93,18 +78,11 @@ void linked_list_sort_ascending(LinkedList* linked_list) {
     Person  *cur_person = NULL,
             *next_person = NULL;
     
-<<<<<<< HEAD
-    while(start != end_unsorted) {
-        cur = start;
-
-        while(cur->next->next != end_unsorted) {
-=======
     for(int i = 0; i < linked_list->size; i++) {
         cur = start;
         Person* tmp = cur->data;
 
         while(cur->next != end_unsorted) {
->>>>>>> origin/main
             cur_person = cur->data;
             next_person = cur->next->data;
 
@@ -114,19 +92,12 @@ void linked_list_sort_ascending(LinkedList* linked_list) {
                 cur->data = next_data;
             }
 
-<<<<<<< HEAD
-            cur = cur->next;
-        }
-
-        if(end_unsorted == NULL) end_unsorted = cur->next;
-=======
             if(cur == start && end_unsorted == cur->next) break;
 
             cur = cur->next;
         }
 
         end_unsorted = cur;
->>>>>>> origin/main
     }
 }
 
@@ -140,18 +111,11 @@ void linked_list_sort_descending(LinkedList* linked_list) {
     Person  *cur_person = NULL,
             *next_person = NULL;
     
-<<<<<<< HEAD
-    while(start != end_unsorted) {
-        cur = start;
-
-        while(cur->next->next != end_unsorted) {
-=======
     for(int i = 0; i < linked_list->size; i++) {
         cur = start;
         Person* tmp = cur->data;
 
         while(cur->next != end_unsorted) {
->>>>>>> origin/main
             cur_person = cur->data;
             next_person = cur->next->data;
 
@@ -161,19 +125,12 @@ void linked_list_sort_descending(LinkedList* linked_list) {
                 cur->data = next_data;
             }
 
-<<<<<<< HEAD
-            cur = cur->next;
-        }
-
-        if(end_unsorted == NULL) end_unsorted = cur->next;
-=======
             if(cur == start && end_unsorted == cur->next) break;
 
             cur = cur->next;
         }
 
         end_unsorted = cur;
->>>>>>> origin/main
     }
 }
 
