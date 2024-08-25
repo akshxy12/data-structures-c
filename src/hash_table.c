@@ -1,5 +1,8 @@
 #include "../include/hash_table.h"
 
+#include <stdio.h>
+#include "../include/person.h"
+
 HashTableNode *hash_table_node_create(char *key, void *data)
 {
     HashTableNode *new_node = (HashTableNode *)malloc(sizeof(HashTableNode));
@@ -38,7 +41,7 @@ HashTable *hash_table_create(int size, int (*hash_function)(char *key, int hash_
         return NULL;
 
     hash_table->size = size;
-    hash_table->pairs = (HashTableNode **)calloc(size, sizeof(HashTableNode *));
+    hash_table->pairs = (HashTableNode **) malloc(size * sizeof(HashTableNode *));
 
     for(int i = 0; i < size; i++)
     {
@@ -61,6 +64,7 @@ bool hash_table_insert(HashTable *hash_table, char *key, void *data)
         return false;
 
     int index = hash_table->hash_function(key, hash_table->size);
+
     new_node->next = hash_table->pairs[index];
     hash_table->pairs[index] = new_node;
 
@@ -132,10 +136,21 @@ void hash_table_destroy(HashTable **hash_table_ptr) {
         if((*hash_table_ptr)->pairs[i] == NULL)
             continue;
         
-        void* data = hash_table_node_destroy(&(*hash_table_ptr)->pairs[i]);
-        free(data);
-        data = NULL;
+        HashTableNode   *cur = (*hash_table_ptr)->pairs[i],
+                        *node_to_be_deleted = NULL;
+        void* data_to_be_deleted = NULL;
+
+        while(cur != NULL) {
+            node_to_be_deleted = cur;
+            cur = cur->next;
+
+            data_to_be_deleted = hash_table_node_destroy(&node_to_be_deleted);
+            free(data_to_be_deleted);
+            data_to_be_deleted = NULL;
+        }
     }
+
+    (*hash_table_ptr)->hash_function = NULL;
 
     free((*hash_table_ptr)->pairs);
     (*hash_table_ptr)->pairs = NULL;
