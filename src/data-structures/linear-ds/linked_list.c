@@ -1,4 +1,4 @@
-#include "../../include/data-structures/linked_list.h"
+#include "../../../include/data-structures/linear-ds/linked_list.h"
 
 LinkedListNode* linked_list_node_create(void* data) {
     LinkedListNode* new_node = (LinkedListNode*) malloc(sizeof(LinkedListNode));

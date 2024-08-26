@@ -1,4 +1,4 @@
-#include "../../include/data-structures/stack.h"
+#include "../../../include/data-structures/linear-ds/stack.h"
 
 StackNode* stack_node_create(void* data) {
     StackNode* new_stack_node = (StackNode*) malloc(sizeof(StackNode));

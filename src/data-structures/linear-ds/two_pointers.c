@@ -1,4 +1,4 @@
-#include "../../include/data-structures/two_pointers.h"
+#include "../../../include/data-structures/linear-ds/two_pointers.h"
 
 bool sum_equal_to_target(int* arr, int size, int target) {
     if(arr == NULL || size < 0) return false;

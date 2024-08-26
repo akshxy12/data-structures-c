@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "include/data-structures/two_pointers.h"
+#include "include/data-structures/linear-ds/two_pointers.h"
 #include "include/algorithms/sort/bubble_sort.h"
 
 int main() {
