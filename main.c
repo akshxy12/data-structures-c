@@ -7,7 +7,7 @@ int main() {
     int size = 5;
     int target = 7;
 
-    if(sum_equal_to_target(arr, size, 8)) {
+    if(sum_equal_to_target(arr, size, target)) {
         printf("Sum is equal to target(%d)\n", target);
     } else {
         printf("Sum is not equal to target(%d)\n", target);
