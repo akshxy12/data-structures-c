@@ -1,4 +1,4 @@
-#include "../include/queue.h"
+#include "../../include/data-structures/queue.h"
 
 QueueNode* queue_node_create(void* data) {
     QueueNode* new_node = (QueueNode*) malloc(sizeof(QueueNode));

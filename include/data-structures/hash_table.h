@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "string_extra.h"
+#include "../string_extra.h"
 
 #define KEY_MAX_LEN 20
 

@@ -1,7 +1,7 @@
-#include "../include/hash_table.h"
+#include "../../include/data-structures/hash_table.h"
 
 #include <stdio.h>
-#include "../include/person.h"
+#include "../../include/person.h"
 
 HashTableNode *hash_table_node_create(char *key, void *data)
 {

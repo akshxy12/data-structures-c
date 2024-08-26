@@ -1,4 +1,4 @@
-#include "../include/priority_queue.h"
+#include "../../include/data-structures/priority_queue.h"
 
 PriorityQueueNode* priority_queue_node_create(void* data, int priority) {
     PriorityQueueNode* new_priority_queue_node = (PriorityQueueNode*) malloc(sizeof(PriorityQueueNode));
