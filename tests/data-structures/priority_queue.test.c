@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/priority_queue.h"
+#include "include/data-structures/priority_queue.h"
 #include "include/person.h"
 
 void print_person_priority_queue(PriorityQueue *priority_queue)

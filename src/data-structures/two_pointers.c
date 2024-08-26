@@ -7,6 +7,8 @@ bool sum_equal_to_target(int* arr, int size, int target) {
     int* end = arr + size-1;
     int sum = 0;
 
+    bubble_sort_ascending(arr, size);
+
     while(start != end) {
         sum = *start + *end;
 

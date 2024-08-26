@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "include/two_pointers.h"
+#include "include/data-structures/two_pointers.h"
 
 int main() {
     int arr[] = {2, 5, 3, 10, 66};

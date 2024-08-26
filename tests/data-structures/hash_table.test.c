@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "include/hash_table.h"
+#include "include/data-structures/hash_table.h"
 #include "include/hash.h"
 #include "include/person.h"
 

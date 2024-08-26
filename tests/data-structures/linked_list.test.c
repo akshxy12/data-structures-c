@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "include/linked_list.h"
+#include "include/data-structures/linked_list.h"
 #include "include/person.h"
 #include "include/string_extra.h"
 

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "include/queue.h"
+#include "include/data-structures/queue.h"
 #include "include/person.h"
 
 void print_person_queue(Queue* q) {

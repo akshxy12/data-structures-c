@@ -1,25 +1,17 @@
 #include <stdio.h>
-#include "include/algorithms/sliding_window.h"
+#include "include/data-structures/two_pointers.h"
+#include "include/algorithms/sort/bubble_sort.h"
 
 int main() {
-    int arr[] = {5, 10, 25, 6, 1, 2};
-    int size = 6;
-    int window_size = 3;
+    int arr[] = {2, 5, 3, 10, 66};
+    int size = 5;
+    int target = 7;
 
-    int* subarr = find_subarray_with_target_sum(arr, size, window_size);
-
-    printf("Sub-array:\n");
-    printf("[");
-    for(int i = 0; i < window_size; i++) {
-        printf("%d", subarr[i]);
-
-        if(i < window_size-1)
-            printf(", ");
+    if(sum_equal_to_target(arr, size, 8)) {
+        printf("Sum is equal to target(%d)\n", target);
+    } else {
+        printf("Sum is not equal to target(%d)\n", target);
     }
-    printf("]\n");
-
-    free(subarr);
-    subarr = NULL;
 
     return 0;
 }
