@@ -1,6 +1,6 @@
 #include "../../../../include/data-structures/non-linear-ds/trees/tree.h"
 
-TreeNode* tree_node_create(void* data, TreeNode* left_child, TreeNode* right_child) {
+TreeNode* tree_node_create(int data, TreeNode* left_child, TreeNode* right_child) {
     TreeNode* new_node = (TreeNode*) malloc(sizeof(TreeNode));
 
     if(new_node == NULL) return NULL;
@@ -15,9 +15,7 @@ TreeNode* tree_node_create(void* data, TreeNode* left_child, TreeNode* right_chi
 void tree_node_destroy(TreeNode** tree_node_ptr) {
     if(*tree_node_ptr == NULL) return;
 
-    free((*tree_node_ptr)->data);
-    (*tree_node_ptr)->data = NULL;
-
+    (*tree_node_ptr)->data = 0;
     (*tree_node_ptr)->left_child = NULL;
     (*tree_node_ptr)->right_child = NULL;
 
@@ -38,9 +36,60 @@ Tree* tree_create() {
 }
 
 void tree_inorder_traversal(Tree* tree) {
-    
+    _tree_inorder_traversal_recurse(tree->root);
+    printf("\n");
 }
 
-void tree_preorder_traversal(Tree* tree);
-void tree_postorder_traversal(Tree* tree);
-void tree_destroy(Tree** treePtr);
+void _tree_inorder_traversal_recurse(TreeNode* tnode) {
+    if(tnode == NULL) return;
+
+    _tree_inorder_traversal_recurse(tnode->left_child);
+    printf("%d ", tnode->data);
+    _tree_inorder_traversal_recurse(tnode->right_child);
+}
+
+void tree_preorder_traversal(Tree* tree) {
+    _tree_preorder_traversal_recurse(tree->root);
+    printf("\n");
+}
+
+void _tree_preorder_traversal_recurse(TreeNode* tnode) {
+    if(tnode == NULL) return;
+    
+    printf("%d ", tnode->data);
+    _tree_preorder_traversal_recurse(tnode->left_child);
+    _tree_preorder_traversal_recurse(tnode->right_child);
+}
+
+void tree_postorder_traversal(Tree* tree) {
+    _tree_postorder_traversal_recurse(tree->root);
+    printf("\n");
+}
+
+void _tree_postorder_traversal_recurse(TreeNode* tnode) {
+    if(tnode == NULL) return;
+
+    _tree_postorder_traversal_recurse(tnode->left_child);
+    _tree_postorder_traversal_recurse(tnode->right_child);
+    printf("%d ", tnode->data);
+}
+
+void tree_destroy(Tree** treePtr) {
+    if(*treePtr == NULL) return;
+
+    if((*treePtr)->root != NULL) {
+        _tree_destroy_postorder((*treePtr)->root);
+    }
+
+    free(*treePtr);
+    *treePtr = NULL;
+}
+
+void _tree_destroy_postorder(TreeNode* tnode) {
+    if(tnode == NULL) return;
+
+    _tree_destroy_postorder(tnode->left_child);
+    _tree_destroy_postorder(tnode->right_child);
+
+    tree_node_destroy(&tnode);
+}

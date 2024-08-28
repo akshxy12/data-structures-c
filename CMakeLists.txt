@@ -33,4 +33,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/data-structures/
     ${CMAKE_CURRENT_SOURCE_DIR}/data-structures/linear-ds/
     ${CMAKE_CURRENT_SOURCE_DIR}/data-structures/non-linear-ds/
+    ${CMAKE_CURRENT_SOURCE_DIR}/data-structures/non-linear-ds/trees
 )
