@@ -81,6 +81,13 @@ bool _binary_tree_insertion_recurse(BinaryTreeNode *parent_node, int data)
     }
 }
 
+// ! All possible cases were NOT COVERED
+/*   
+ *  Let's say we want to delete the node 'x'
+ *      Case 1: 'x' has no children --- NEED TO DO
+ *      Case 2: 'x' has one child node --- NEED TO DO
+ *      Case 3: 'x' has two child node --- COMPLETED
+ */  
 bool binary_tree_deletion(BinaryTree *tree, int data)
 {
     if (tree == NULL || tree->root == NULL)
