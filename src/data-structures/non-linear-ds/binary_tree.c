@@ -1,11 +1,9 @@
 #include "../../../include/data-structures/non-linear-ds/binary_tree.h"
 
-BinaryTreeNode *binary_tree_node_create(int data, BinaryTreeNode *left_child, BinaryTreeNode *right_child)
-{
-    BinaryTreeNode *new_node = (BinaryTreeNode *)malloc(sizeof(BinaryTreeNode));
+BinaryTreeNode* binary_tree_node_create(int data, BinaryTreeNode* left_child, BinaryTreeNode* right_child) {
+    BinaryTreeNode* new_node = (BinaryTreeNode*) malloc(sizeof(BinaryTreeNode));
 
-    if (new_node == NULL)
-        return NULL;
+    if(new_node == NULL) return NULL;
 
     new_node->data = data;
     new_node->left_child = left_child;
@@ -13,254 +11,260 @@ BinaryTreeNode *binary_tree_node_create(int data, BinaryTreeNode *left_child, Bi
 
     return new_node;
 }
-void binary_tree_node_destroy(BinaryTreeNode **treeNodePtr)
-{
-    if (*treeNodePtr == NULL)
-        return;
+void binary_tree_node_destroy(BinaryTreeNode** bt_nodeptr) {
+    if(*bt_nodeptr == NULL) return;
 
-    (*treeNodePtr)->data = 0;
-    (*treeNodePtr)->left_child = NULL;
-    (*treeNodePtr)->right_child = NULL;
+    (*bt_nodeptr)->data = 0;
+    (*bt_nodeptr)->left_child = NULL;
+    (*bt_nodeptr)->right_child = NULL;
 
-    free(*treeNodePtr);
-    *treeNodePtr = NULL;
+    free(*bt_nodeptr);
+    *bt_nodeptr = NULL;
 }
 
-BinaryTree *binary_tree_create()
-{
-    BinaryTree *new_tree = (BinaryTree *)malloc(sizeof(BinaryTree));
+BinaryTree* binary_tree_create() {
+    BinaryTree* bt = (BinaryTree*) malloc(sizeof(BinaryTree));
 
-    if (new_tree == NULL)
-        return NULL;
+    if(bt == NULL) return NULL;
 
-    new_tree->root = NULL;
+    bt->root = NULL;
 
-    return new_tree;
+    return bt;
 }
 
-bool binary_tree_insertion(BinaryTree *tree, int data)
-{
-    if (tree == NULL)
-        return false;
+bool binary_tree_insert_by_value(BinaryTree* bt, int data) {
+    if(bt == NULL) return false;
 
-    if (tree->root == NULL)
-    {
-        BinaryTreeNode *new_node = binary_tree_node_create(data, NULL, NULL);
-        tree->root = new_node;
+    if(bt->root == NULL) {
+        BinaryTreeNode* new_node = binary_tree_node_create(data, NULL, NULL);
+
+        if(new_node == NULL) return false;
+
+        bt->root = new_node;
     }
-    else
-    {
-        return _binary_tree_insertion_recurse(tree->root, data);
-    }
+
+    return _binary_tree_insert_by_value_recurse(bt->root, data);
 }
+bool _binary_tree_insert_by_value_recurse(BinaryTreeNode* btnode, int data) {
+    if(btnode == NULL || btnode->data == data) return false;
 
-bool _binary_tree_insertion_recurse(BinaryTreeNode *parent_node, int data)
-{
-    if (parent_node == NULL)
-        false;
-
-    if (data < parent_node->data)
-    {
-        if (parent_node->left_child != NULL)
-        {
-            return _binary_tree_insertion_recurse(parent_node->left_child, data);
+    if(data < btnode->data) {
+        if(btnode->left_child != NULL) {
+            return _binary_tree_insert_by_value_recurse(btnode->left_child, data);
         }
 
-        BinaryTreeNode *new_node = binary_tree_node_create(data, NULL, NULL);
-        parent_node->left_child = new_node;
+        BinaryTreeNode* new_node = binary_tree_node_create(data, NULL, NULL);
+        btnode->left_child = new_node;
+        return true;
     }
-    else
-    {
-        if (parent_node->right_child != NULL)
-        {
-            return _binary_tree_insertion_recurse(parent_node->right_child, data);
-        }
-
-        BinaryTreeNode *new_node = binary_tree_node_create(data, NULL, NULL);
-        parent_node->right_child = new_node;
+    
+    if(btnode->right_child != NULL) {
+        return _binary_tree_insert_by_value_recurse(btnode->right_child, data);
     }
-}
-
-// ! All possible cases were NOT COVERED
-/*   
- *  Let's say we want to delete the node 'x'
- *      Case 1: 'x' has no children --- NEED TO DO
- *      Case 2: 'x' has one child node --- NEED TO DO
- *      Case 3: 'x' has two child node --- COMPLETED
- */  
-bool binary_tree_deletion(BinaryTree *tree, int data)
-{
-    if (tree == NULL || tree->root == NULL)
-        return false;
-
-    BinaryTreeNode* node_to_be_deleted = NULL;
-
-    //  Case 1: Removing root node
-    if (tree->root->data == data)
-    {
-        //  Assign new root node
-        node_to_be_deleted = tree->root;
-        tree->root = tree->root->left_child;
-
-        //  Connect root's child node to it
-        BinaryTreeNode *rightmost_child_of_new_root = _binary_tree_find_rightmost_leaf_node(tree->root);
-        rightmost_child_of_new_root->right_child = node_to_be_deleted->right_child;
-    }
-    else
-    {
-        //  Case 2: Removing internal node
-        //  Finding parent node
-        BinaryTreeNode* parent_node = _binary_tree_find_parent_node(tree->root, data);
-        bool is_left_child = false;
-
-        if(parent_node == NULL) return false;
-
-        if(parent_node->left_child->data == data) is_left_child = true;
-        node_to_be_deleted = (is_left_child) ? parent_node->left_child : parent_node->right_child;
-
-        //  Reconnecting child nodes to the tree
-        BinaryTreeNode* rightmost_child_of_left_child_node = _binary_tree_find_rightmost_leaf_node(node_to_be_deleted->left_child);
-        rightmost_child_of_left_child_node->right_child = node_to_be_deleted->right_child;
-
-        if(is_left_child) {
-            parent_node->left_child = node_to_be_deleted->left_child;
-        } else {
-            parent_node->right_child = node_to_be_deleted->left_child;
-        }
-    }
-
-    //  Deleting node from memory
-    binary_tree_node_destroy(&node_to_be_deleted);
+    
+    BinaryTreeNode* new_node = binary_tree_node_create(data, NULL, NULL);
+    btnode->right_child = new_node;
     return true;
 }
 
-BinaryTreeNode *_binary_tree_find_rightmost_leaf_node(BinaryTreeNode *node)
-{
-    if (node == NULL)
+bool binary_tree_insert_by_level_order(BinaryTree* bt, int data) {
+    if(bt == NULL) return false;
+
+    if(bt->root == NULL) {
+        BinaryTreeNode* new_node = binary_tree_node_create(data, NULL, NULL);
+        bt->root = new_node;
+        return true;
+    }
+
+    Queue* q = queue_create();
+    bool result = _binary_tree_insert_by_level_order_recurse(bt->root, q, data);
+
+    //  Remove binary tree nodes from queue; Prevents them from getting deleted, when queue is cleared
+    while(!queue_is_empty(q)) queue_dequeue(q); 
+    queue_destroy(&q);
+
+    return result;
+}
+bool _binary_tree_insert_by_level_order_recurse(BinaryTreeNode* btnode, Queue* q, int data) {
+    if(btnode == NULL) return false;
+
+    if(btnode->left_child == NULL) {
+        BinaryTreeNode* new_node = binary_tree_node_create(data, NULL, NULL);
+        btnode->left_child = new_node;
+        return true;
+    } else if(btnode->right_child == NULL) {
+        BinaryTreeNode* new_node = binary_tree_node_create(data, NULL, NULL);
+        btnode->right_child = new_node;
+        return true;
+    }
+
+    queue_enqueue(q, btnode->left_child);
+    queue_enqueue(q, btnode->right_child);
+    // binary_tree_queue_print(q);
+    return _binary_tree_insert_by_level_order_recurse(queue_dequeue(q), q, data);
+}
+
+bool binary_tree_delete_with_next_smallest(BinaryTree* bt, int data) {
+    if(bt == NULL || bt->root == NULL) return false;
+
+    // 1. Finding parent node
+    BinaryTreeNode* parent = _binary_tree_find_parent_node(bt->root, data);
+    BinaryTreeNode* node_to_be_deleted = NULL;
+    BinaryTreeNode* next_smallest_parent = NULL;
+    bool child_is_left = false;
+
+    //  If parent->data = data, removing root node
+    if(parent->data == data) {
+        node_to_be_deleted = parent;
+    } else { // 2. Finding child node
+        if(parent->left_child != NULL && parent->left_child->data == data) {
+            node_to_be_deleted = parent->left_child;
+            child_is_left = true;
+        }
+        else if(parent->right_child != NULL) {
+            node_to_be_deleted = parent->right_child;
+        }
+    }
+
+    // 3. Finding next smallest node
+    if(node_to_be_deleted->left_child != NULL) next_smallest_parent = _binary_tree_find_next_smallest_parent(node_to_be_deleted->left_child);
+
+    if(next_smallest_parent != NULL && next_smallest_parent->right_child != NULL) {
+        node_to_be_deleted->data = next_smallest_parent->right_child->data;
+        node_to_be_deleted = next_smallest_parent->right_child;
+        next_smallest_parent->right_child = NULL;
+    } else { // Deleting leaf node
+        if(child_is_left) parent->left_child = NULL;
+        else parent->right_child = NULL;
+    }
+
+    binary_tree_node_destroy(&node_to_be_deleted);
+    
+    return true;
+}
+BinaryTreeNode* _binary_tree_find_parent_node(BinaryTreeNode* btnode, int data) {
+    if(btnode == NULL) {
         return NULL;
-
-    if (node->right_child == NULL)
-        return node;
-    else
-        return _binary_tree_find_rightmost_leaf_node(node->right_child);
-}
-
-BinaryTreeNode *_binary_tree_find_parent_node(BinaryTreeNode *root, int child_node_data)
-{
-    if (root == NULL || root->data == child_node_data)
-        return NULL;
-
-    if (root->left_child->data == child_node_data || root->right_child->data == child_node_data)
-        return root;
-    else if (child_node_data < root->data)
-        return _binary_tree_find_parent_node(root->left_child, child_node_data);
-    else
-        return _binary_tree_find_parent_node(root->right_child, child_node_data);
-}
-
-void binary_tree_inorder_traversal(BinaryTree *tree)
-{
-    if (tree == NULL || tree->root == NULL)
-        return;
-
-    _binary_tree_inorder_traversal_recurse(tree->root);
-}
-
-void _binary_tree_inorder_traversal_recurse(BinaryTreeNode *tnode)
-{
-    if (tnode == NULL)
-        return;
-
-    _binary_tree_inorder_traversal_recurse(tnode->left_child);
-    printf("%d ", tnode->data);
-    _binary_tree_inorder_traversal_recurse(tnode->right_child);
-}
-
-void binary_tree_preorder_traversal(BinaryTree *tree)
-{
-    if (tree == NULL || tree->root == NULL)
-        return;
-
-    _binary_tree_preorder_traversal_recurse(tree->root);
-}
-
-void _binary_tree_preorder_traversal_recurse(BinaryTreeNode *tnode)
-{
-    if (tnode == NULL)
-        return;
-
-    printf("%d ", tnode->data);
-    _binary_tree_preorder_traversal_recurse(tnode->left_child);
-    _binary_tree_preorder_traversal_recurse(tnode->right_child);
-}
-
-void binary_tree_postorder_traversal(BinaryTree *tree)
-{
-    if (tree == NULL || tree->root == NULL)
-        return;
-
-    _binary_tree_postorder_traversal_recurse(tree->root);
-}
-
-void _binary_tree_postorder_traversal_recurse(BinaryTreeNode *tnode)
-{
-    if (tnode == NULL)
-        return;
-
-    _binary_tree_postorder_traversal_recurse(tnode->left_child);
-    _binary_tree_postorder_traversal_recurse(tnode->right_child);
-    printf("%d ", tnode->data);
-}
-
-void binary_tree_print(BinaryTree* tree) {
-    if(tree == NULL || tree->root == NULL) return;
-
-    _binary_tree_print_recurse(tree->root);
-    printf("\n");    
-}
-
-void _binary_tree_print_recurse(BinaryTreeNode* node) {
-    if(node == NULL) return;
-
-    printf("Node: %d", node->data);
-    printf("--> [");
-    if(node->left_child == NULL) {
-        printf("NULL, ");
-    } else {
-        printf("%d, ", node->left_child->data);
-    }
-    if(node->right_child == NULL) {
-        printf("NULL");    
-    } else {
-        printf("%d", node->right_child->data);
-    }
-    printf("]\n");
-
-    _binary_tree_print_recurse(node->left_child);
-    _binary_tree_print_recurse(node->right_child);
-}
-
-void binary_tree_destroy(BinaryTree **treePtr)
-{
-    if (*treePtr == NULL)
-        return;
-
-    if ((*treePtr)->root != NULL)
-    {
-        _binary_tree_destroy_postorder((*treePtr)->root);
     }
 
-    free(*treePtr);
-    *treePtr = NULL;
-}
-void _binary_tree_destroy_postorder(BinaryTreeNode *tnode)
-{
-    if (tnode == NULL)
-        return;
 
-    _binary_tree_destroy_postorder(tnode->left_child);
-    _binary_tree_destroy_postorder(tnode->right_child);
+    if(data == btnode->data || 
+    (btnode->left_child != NULL && btnode->left_child->data == data) || 
+    (btnode->right_child != NULL && btnode->right_child->data == data)) {
+        return btnode;
+    } else if(data < btnode->data) {
+        return _binary_tree_find_parent_node(btnode->left_child, data);
+    }
 
-    free(tnode);
-    tnode = NULL;
+    return _binary_tree_find_parent_node(btnode->right_child, data);
 }
+BinaryTreeNode* _binary_tree_find_next_smallest_parent(BinaryTreeNode* btnode) {
+    if(btnode == NULL || btnode->right_child == NULL) return NULL;
+
+    if(btnode->right_child->right_child == NULL) return btnode;
+    return _binary_tree_find_next_smallest_parent(btnode->right_child);
+}
+
+bool binary_tree_delete_with_next_biggest(BinaryTree* bt, int data) {
+    if(bt == NULL || bt->root == NULL) {
+
+    }
+}
+BinaryTreeNode* _binary_tree_find_next_biggest_parent(BinaryTreeNode* btnode); 
+
+void binary_tree_inorder(BinaryTree* bt) {
+    if(bt == NULL || bt->root == NULL) return;
+
+    _binary_tree_inorder_traversal(bt->root);
+}
+void _binary_tree_inorder_traversal(BinaryTreeNode* btnode) {
+    if(btnode == NULL) return;
+
+    _binary_tree_inorder_traversal(btnode->left_child);
+    printf("%d ", btnode->data);
+    _binary_tree_inorder_traversal(btnode->right_child);
+}
+
+void binary_tree_preorder(BinaryTree* bt) {
+    if(bt == NULL || bt->root == NULL) return;
+
+    _binary_tree_preorder_traversal(bt->root);
+}
+void _binary_tree_preorder_traversal(BinaryTreeNode* btnode) {
+    if(btnode == NULL) return;
+
+    printf("%d ", btnode->data);
+    _binary_tree_preorder_traversal(btnode->left_child);
+    _binary_tree_preorder_traversal(btnode->right_child);
+}
+
+void binary_tree_postorder(BinaryTree* bt) {
+    if(bt == NULL || bt->root == NULL) return;
+
+    _binary_tree_postorder_traversal(bt->root);
+}
+void _binary_tree_postorder_traversal(BinaryTreeNode* btnode) {
+    if(btnode == NULL) return;
+
+    _binary_tree_postorder_traversal(btnode->left_child);
+    _binary_tree_postorder_traversal(btnode->right_child);
+    printf("%d ", btnode->data);
+}
+
+void binary_tree_print(BinaryTree* bt) {
+    if(bt == NULL || bt->root == NULL) return;
+
+    _binary_tree_print_recurse(bt->root, 1);
+    printf("\n");
+}
+void _binary_tree_print_recurse(BinaryTreeNode* btnode, int level) {
+    if(btnode == NULL) return;
+
+    for(int i = 1; i < level; i++)
+        printf("\t");
+
+    printf("|-- %d\n", btnode->data);
+
+    _binary_tree_print_recurse(btnode->left_child, level+1);
+    _binary_tree_print_recurse(btnode->right_child, level+1);
+}
+
+void binary_tree_destroy(BinaryTree** btptr) {
+    if(*btptr == NULL) return;
+
+    if((*btptr)->root != NULL)
+        _binary_tree_destroy_recurse((*btptr)->root);
+
+    free(*btptr);
+    *btptr = NULL;
+}
+void _binary_tree_destroy_recurse(BinaryTreeNode* btnode) {
+    if(btnode == NULL) return;
+    
+    _binary_tree_destroy_recurse(btnode->left_child);
+    _binary_tree_destroy_recurse(btnode->right_child);
+
+    binary_tree_node_destroy(&btnode);
+}
+
+//  ! Debugging functions
+void binary_tree_queue_print(Queue* q) {
+    if(q == NULL || queue_is_empty(q)) return;
+
+    QueueNode* cur = q->front;
+
+    printf("[");
+    while(cur != NULL) {
+        BinaryTreeNode* cur_btnode = cur->data;
+
+        printf("%d", cur_btnode->data);
+
+        if(cur->next != NULL)
+            printf(", ");
+        
+        cur = cur->next;
+    }
+    printf("]");
+    printf("\n");
+}
+

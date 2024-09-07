@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "include/data-structures/stack.h"
+#include "include/data-structures/linear-ds/stack.h"
 #include "include/person.h"
 
 void print_person_stack(Stack* s) {

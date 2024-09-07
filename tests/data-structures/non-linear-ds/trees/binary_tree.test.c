@@ -1,8 +1,12 @@
 #include <stdio.h>
-#include "include/data-structures/non-linear-ds/tree.h"
+#include "include/data-structures/non-linear-ds/binary_tree.h"
 
 int main() {
-    BinaryTree* t = binary_tree_create();
+    BinaryTree* bt = binary_tree_create();
+    if(bt == NULL) {
+        printf("Binary Tree not allocated.\n");
+    }
+/*
     BinaryTreeNode* tn1 = binary_tree_node_create(1, NULL, NULL);
     BinaryTreeNode* tn2 = binary_tree_node_create(2, NULL, NULL);
     BinaryTreeNode* tn3 = binary_tree_node_create(3, NULL, NULL);
@@ -11,24 +15,19 @@ int main() {
     BinaryTreeNode* tn6 = binary_tree_node_create(6, NULL, NULL);
     BinaryTreeNode* tn7 = binary_tree_node_create(7, NULL, NULL);
     BinaryTreeNode* tn8 = binary_tree_node_create(8, NULL, NULL);
-
-    t->root = tn1;
-    tn1->left_child = tn2;
-    tn1->right_child = tn5;
-
-    tn2->left_child = tn3;
-    tn2->right_child = tn4;
-
-    tn5->left_child = tn6;
-    tn5->right_child = tn7;
-
-    tn7->left_child = tn8;
-
-    binary_tree_inorder_traversal(t);
-    binary_tree_preorder_traversal(t);
-    binary_tree_postorder_traversal(t);
-
-    binary_tree_destroy(&t);
-
+    BinaryTreeNode* tn99 = binary_tree_node_create(99, NULL, NULL);
+*/
+    binary_tree_insert_by_level_order(bt, 1);
+    binary_tree_insert_by_level_order(bt, 2);
+    binary_tree_insert_by_level_order(bt, 3);
+    binary_tree_insert_by_level_order(bt, 4);
+    binary_tree_insert_by_level_order(bt, 5);
+    binary_tree_insert_by_level_order(bt, 6);
+    binary_tree_insert_by_level_order(bt, 7);
+    binary_tree_insert_by_level_order(bt, 8);
+    binary_tree_insert_by_level_order(bt, 9);
+   
+    // binary_tree_destroy(&bt);
+    binary_tree_print(bt);
     return 0;
 }
