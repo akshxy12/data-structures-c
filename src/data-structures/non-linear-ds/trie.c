@@ -135,29 +135,32 @@ bool trie_search(Trie *trie, char *word_to_search) {
 
     return _trie_search_word(trie->root, word_to_search, 0);
 }
-bool _trie_search_word(TrieNode *node, char *string, int index) {
-    if(node == NULL) {
+bool _trie_search_word(TrieNode *cur, char *string, int index) {
+    if(cur == NULL) {
         return false;
     }
 
     int child_index = -1;
 
     for(int i = 0; i < ALPHABET_SIZE; i++) {
-        if(node->children[i] != NULL) {
-            if(node->children[i]->character == string[index]) {
+        if(cur->children[i] != NULL) {
+            if(cur->children[i]->character == string[index]) {
                 child_index = i;
                 break;
             }
         }
     }
-
+    
     if(child_index == -1) {
         return false;
     }
 
     bool child_search = false;
+
     if(string[index+1] != '\0') {
-        child_search = _trie_search_word(node->children[child_index], string, index+1);
+        child_search = _trie_search_word(cur->children[child_index], string, index+1);
+    } else {
+        child_search = true;
     }
 
     return child_search;

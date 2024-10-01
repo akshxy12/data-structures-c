@@ -17,8 +17,12 @@ int main()
     trie_insert(trie, "befh");
     trie_insert(trie, "zxy");
     
-    if(trie_search(trie, "ac")) {
-        printf("Found ac");
+    char to_find[] = "befx";
+
+    if(trie_search(trie, to_find)) {
+        printf("Found %s\n", to_find);
+    } else {
+        printf("Did not find %s\n", to_find);
     }
 
     trie_delete(trie, "befh");
