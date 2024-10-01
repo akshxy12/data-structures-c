@@ -1,27 +1,30 @@
-#include <stdio.h>
-#include "include/data-structures/non-linear-ds/binary_tree.h"
+#include "include/data-structures/non-linear-ds/trie.h"
 
-int main() {
-    BinaryTree* bt = binary_tree_create();
-   
-    binary_tree_insert_by_value(bt, 10);
-    binary_tree_insert_by_value(bt, 8);
-    binary_tree_insert_by_value(bt, 6);
-    binary_tree_insert_by_value(bt, 9);
-    binary_tree_insert_by_value(bt, 20);
-    binary_tree_insert_by_value(bt, 10);
-    binary_tree_insert_by_value(bt, 35);
-    binary_tree_insert_by_value(bt, 13);
-    binary_tree_insert_by_value(bt, 15);
-    binary_tree_insert_by_value(bt, 4);
-    binary_tree_insert_by_value(bt, 1);
-    binary_tree_insert_by_value(bt, 16);
+int main()
+{
+    Trie *trie = trie_create();
+    /*
+    trie_insert(trie, "some");
+    trie_insert(trie, "something");
+    trie_insert(trie, "akshay");
+    trie_insert(trie, "anushka");
+    */
 
-    binary_tree_print(bt);
-    binary_tree_insert_by_value(bt, 1000);
-    binary_tree_delete_with_next_smallest(bt, 1);
-    binary_tree_print(bt);
+    trie_insert(trie, "ac");
+    trie_insert(trie, "ad");
+    trie_insert(trie, "adw");
+    trie_insert(trie, "befg");
+    trie_insert(trie, "befh");
+    trie_insert(trie, "zxy");
     
-    binary_tree_destroy(&bt);
+    if(trie_search(trie, "ac")) {
+        printf("Found ac");
+    }
+
+    trie_delete(trie, "befh");
+    
+    
+    trie_destroy(&trie);
+
     return 0;
 }
